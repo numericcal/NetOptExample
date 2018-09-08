@@ -43,10 +43,14 @@ def test_model(net,testloader,device):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
             print("{0:.0f}% tested".format(100*total/10000), end='')
-            print('| Accuracy: %.3f%% (%d/%d)'
+            print('| Cumulative Accuracy: %.3f%% (%d correct/%d total)'
                   % (100.*correct/total, correct, total))
         end = time.time()
-        print('Time for testing 10000 pictures: %.2f seconds' % (end-start))
+        print('==============================================================')
+        print('Summary:')
+        print('Overall Accuracy for 10000 pictures: %.3f%%' % (100.*correct/total))
+        print('Total execution Time for testing 10000 pictures: %.2f seconds' % (end-start))
+        print('==============================================================')
         return 100.*correct/total
 
 

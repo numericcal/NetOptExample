@@ -1,12 +1,13 @@
 # NetOptExample
 
 This demo contains the result of running Numericcal NetOptimizer on Mobilenet trained using CIFAR10 dataset.
-The NetOptimizer automatically remove redundant expressiveness in the network, resulting in a much smaller/faster model without sacrificing accuracy.
+The NetOptimizer performs size/accuracy trade-off automatically. This process often uncovers redundant expressiveness in the network, 
+which can then be substantially reduced in size without losing accuracy. Such an example is given in this repo.
 
 ## Included Mobilenet Models 
 There are two models in the repo: the original mobilenet trained to 92.17% accuracy and a pruned version at 92.37% accuracy (improved accuracy due to regularizing effect of pruning). 
-The NetOptimizer actually can produce even smaller models whose accuracy is lower than the original, they are not included in this demo repo. 
-The pruned version is about 10x smaller than the original model and depending on the underlying libraries, can be 7-8x faster.
+The pruned network is about 10x smaller than the original model and depending on the underlying libraries, can be 7-8x faster.
+As mentioned earlier, the NetOptimizer actually explore the size/accuracy trade-off and it has generated even smaller/faster models at the cost of lower accuracy. For simplicity's sake, they are not included in this demo repo. 
 
 
 ## Running and Testing the Models
