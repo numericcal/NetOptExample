@@ -1,6 +1,6 @@
 import os
 import sys
-
+import time
 import torch
 import torchvision
 import torchvision.transforms as transforms
@@ -22,7 +22,7 @@ def load_model(model_str, path_comps):
                       linear_filter_count=model_dict['lfc'])
     model.load_state_dict(model_dict['state_dict'])
     param_size = count_parameters(model)
-    print('\t%d\t\t\t| %.2f    |' % (param_size,model_dict['acc'] ) )
+    print('\t%d\t   | %.2f    |' % (param_size,model_dict['acc'] ) )
     return model
 
 
@@ -33,6 +33,7 @@ def test_model(net,testloader,device):
     correct = 0
     total = 0
     with torch.no_grad():
+        start = time.time()
         for batch_idx, (inputs, targets) in enumerate(testloader):
             inputs, targets = inputs.to(device), targets.to(device)
             outputs = net(inputs)
@@ -44,7 +45,8 @@ def test_model(net,testloader,device):
             print("{0:.0f}% tested".format(100*total/10000), end='')
             print('| Accuracy: %.3f%% (%d/%d)'
                   % (100.*correct/total, correct, total))
-
+        end = time.time()
+        print('Time for testing 10000 pictures: %.2f seconds' % (end-start))
         return 100.*correct/total
 
 
@@ -61,7 +63,7 @@ def test_data_prep():
 
 def main():
     device_cpu = torch.device("cpu")
-    test_loader = test_data_prep()
+
     print("---------------------------------------------------------------")
     print('|  MODEL VARIANTS              | # OF PARAMETERS   | ACCURACY |')
 
@@ -70,10 +72,10 @@ def main():
     pruned_accurate_model = load_model('Pruned accurate mobilenet(2)',
                                 ['mobilenet_models','ckpts', 'pruned_accurate_mobilenet.t7'])
     print("---------------------------------------------------------------")
-
+    test_loader = test_data_prep()
     last_sel = -1
     while last_sel != 0:
-        print('select model variant for testing: [1/2] or 0 to quit:')
+        print('select model variant for testing: [1/2] or 0 to quit:', end="", flush=True)
         last_sel = sys.stdin.readline()
         try:
             last_sel = int(last_sel)
