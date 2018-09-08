@@ -18,6 +18,7 @@ python test_models.py</br>
 
 The script parses the included models and you can test their performance on CIFAR test datasets. 
 
-Note: the first time you run the script, it will take some time to download the CIFAR dataset before you can initiate the test, also the testing on CIFAR can take some of time in a CPU only environment.
+Note: the first time you run the script, it will take some time to download the CIFAR dataset before you can initiate the test, also the testing on CIFAR can take some time in a CPU only environment.
+
 
  
